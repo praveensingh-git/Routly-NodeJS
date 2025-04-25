@@ -1,103 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL Shortener</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f5f7fa;
+      @import url("https://fonts.googleapis.com/css2?family=Aldrich&family=Comic+Relief:wght@400;700&display=swap");
+      * {
         margin: 0;
-        padding: 20px;
-        color: #333;
+        padding: 0;
+        box-sizing: border-box;
+        font-family:"Comic Relief", system-ui;
       }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        padding: 40px 20px;
+        background: url("https://images.unsplash.com/photo-1639762681057-408e52192e55?q=80&w=2232&auto=format&fit=crop")
+          center/cover no-repeat fixed;
+        position: relative;
+      }
+
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(2px);
+        z-index: -1;
+      }
+
       .container {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 16px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        padding: 40px;
+        width: 100%;
         max-width: 1000px;
-        margin: 0 auto;
-        background: white;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        animation: fadeIn 0.6s ease-out;
       }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
       h1 {
-        color: #4a6baf;
+        color: #2c3e50;
         text-align: center;
         margin-bottom: 30px;
+        font-size: 2.5rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
       }
+
       .success-message {
-        background-color: #d4edda;
+        background-color: rgba(212, 237, 218, 0.9);
         color: #155724;
-        padding: 10px 15px;
-        border-radius: 5px;
-        margin-bottom: 20px;
-        text-align: center;
-      }
-      form {
-        background-color: #f8f9fa;
-        padding: 20px;
+        padding: 16px;
         border-radius: 8px;
         margin-bottom: 30px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        animation: slideDown 0.4s ease-out;
+        border-left: 4px solid #28a745;
       }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      form {
+        background-color: rgba(248, 249, 250, 0.8);
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 40px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        transition: all 0.3s;
+      }
+
+      form:hover {
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        transform: translateY(-2px);
+      }
+
       label {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        gap: 10px;
+        gap: 15px;
         font-weight: 500;
+        color: #2c3e50;
       }
+
+      .input-group {
+        flex: 1;
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .input-group i {
+        position: absolute;
+        left: 15px;
+        color: #6c757d;
+      }
+
       input[type="text"] {
         flex: 1;
-        padding: 10px;
-        border: 2px solid #ddd;
-        border-radius: 4px;
+        padding: 14px 15px 14px 45px;
+        border: 2px solid #e0e3e7;
+        border-radius: 8px;
         font-size: 16px;
         min-width: 200px;
+        transition: all 0.3s;
+        background-color: rgba(255, 255, 255, 0.8);
       }
+
       input[type="text"]:focus {
-        border-color: #4a6baf;
         outline: none;
+        border-color: #4e73df;
+        box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.2);
+        background-color: white;
       }
+
       button {
-        background-color: #4a6baf;
+        background-color: #4e73df;
         color: white;
         border: none;
-        padding: 10px 20px;
-        border-radius: 4px;
+        padding: 14px 28px;
+        border-radius: 8px;
         cursor: pointer;
         font-size: 16px;
-        transition: background-color 0.3s;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
+
       button:hover {
-        background-color: #3a5a9f;
+        background-color: #3a56c4;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(78, 115, 223, 0.3);
       }
+
+      .urls-container {
+        background-color: rgba(248, 249, 250, 0.8);
+        padding: 25px;
+        border-radius: 12px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .urls-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .urls-header h2 {
+        color: #2c3e50;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
       table {
         border-collapse: collapse;
         width: 100%;
         margin-top: 20px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
       }
+
       th {
-        background-color: #4a6baf;
+        background-color: #4e73df;
         color: white;
-        padding: 12px;
+        padding: 16px;
         text-align: left;
+        font-weight: 600;
       }
+
+      th:first-child {
+        border-top-left-radius: 8px;
+      }
+
+      th:last-child {
+        border-top-right-radius: 8px;
+      }
+
       td {
-        padding: 10px 12px;
-        border-bottom: 1px solid #ddd;
+        padding: 14px 16px;
+        border-bottom: 1px solid #e9ecef;
+        background-color: rgba(255, 255, 255, 0.8);
       }
-      tr:nth-child(even) {
-        background-color: #f8f9fa;
+
+      tr:last-child td {
+        border-bottom: none;
       }
-      tr:hover {
-        background-color: #e9ecef;
+
+      tr:nth-child(even) td {
+        background-color: rgba(248, 249, 250, 0.8);
       }
+
+      tr:hover td {
+        background-color: rgba(233, 236, 239, 0.8);
+      }
+
       .short-url {
-        color: #4a6baf;
+        color: #4e73df;
         font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
+
       .clicks-count {
         font-weight: bold;
         color: #28a745;
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
+
       .redirect-url {
         color: #6c757d;
         max-width: 300px;
@@ -106,58 +259,275 @@
         white-space: nowrap;
         display: inline-block;
       }
+
+      .copy-btn {
+        background: none;
+        border: none;
+        color: #6c757d;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 4px;
+        transition: all 0.2s;
+      }
+
+      .copy-btn:hover {
+        color: #4e73df;
+        background-color: rgba(78, 115, 223, 0.1);
+      }
+
+      .action-btns {
+        display: flex;
+        gap: 8px;
+      }
+
+      .action-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 6px;
+        border-radius: 4px;
+        transition: all 0.2s;
+        color: #6c757d;
+      }
+
+      .action-btn:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+
+      .action-btn.delete:hover {
+        color: #e74c3c;
+      }
+
+      .action-btn.edit:hover {
+        color: #4e73df;
+      }
+
+      /* SVG Wave Divider */
+      .wave-divider {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+        transform: rotate(180deg);
+      }
+
+      .wave-divider svg {
+        position: relative;
+        display: block;
+        width: calc(100% + 1.3px);
+        height: 80px;
+      }
+
+      .wave-divider .shape-fill {
+        fill: rgba(255, 255, 255, 0.8);
+      }
     </style>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>URL Shortener</title>
   </head>
   <body>
     <div class="container">
-      <h1>URL Shortener</h1>
-      
+      <h1>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="36"
+          height="36"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#4e73df"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round">
+          <path
+            d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+          <path
+            d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+        </svg>
+        URL Shortener
+      </h1>
+
       <% if (locals.id) { %>
       <div class="success-message">
-        URL Generated: <span class="short-url">http://localhost:8000/url/<%= id %></span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#28a745"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        URL Generated:
+        <span class="short-url">http://localhost:8000/url/<%= id %></span>
+        <button
+          class="copy-btn"
+          onclick="copyToClipboard('http://localhost:8000/url/<%= id %>')">
+          <i class="far fa-copy"></i>
+        </button>
       </div>
       <% } %>
-      
+
       <form method="post" action="/url">
         <label>
           Enter your original URL:
-          <input
-            type="text"
-            placeholder="https://example.com"
-            name="url"
-            required />
-          <button type="submit">Generate Short URL</button>
+          <div class="input-group">
+            <i class="fas fa-link"></i>
+            <input
+              type="text"
+              placeholder="https://example.com"
+              name="url"
+              required />
+          </div>
+          <button type="submit">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M3 3h7v7H3z"></path>
+              <path d="M14 3h7v7h-7z"></path>
+              <path d="M14 14h7v7h-7z"></path>
+              <path d="M3 14h7v7H3z"></path>
+            </svg>
+            Generate Short URL
+          </button>
         </label>
       </form>
-      
+
       <% if (locals.urls) { %>
-      <div>
-        <h2>Your Short URLs</h2>
+      <div class="urls-container">
+        <div class="urls-header">
+          <h2>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#2c3e50"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            Your Short URLs
+          </h2>
+          <span class="total-urls">
+            <i class="fas fa-hashtag"></i> Total: <%= urls.length %>
+          </span>
+        </div>
         <table>
           <thead>
             <tr>
-              <th>S. No</th>
+              <th>#</th>
               <th>Short ID</th>
               <th>Original URL</th>
               <th>Clicks</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             <% urls.forEach((url, index) => { %>
-              <tr>
-                <td><%= index+1 %></td>
-                <td class="short-url"><%= url.shortID %></td>
-                <td><a href="<%= url.redirectURL %>" target="_blank" class="redirect-url"><%= url.redirectURL %></a></td>
-                <td class="clicks-count"><%= url.visitHistory.length %></td>
-              </tr>
+            <tr>
+              <td><%= index+1 %></td>
+              <td class="short-url">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#4e73df"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path
+                    d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path
+                    d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                </svg>
+                <%= url.shortID %>
+              </td>
+              <td>
+                <a
+                  href="<%= url.redirectURL %>"
+                  target="_blank"
+                  class="redirect-url">
+                  <%= url.redirectURL %>
+                </a>
+              </td>
+              <td class="clicks-count">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#28a745"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                <%= url.visitHistory.length %>
+              </td>
+              <td>
+                <div class="action-btns">
+                  <button
+                    class="action-btn copy-btn"
+                    onclick="copyToClipboard('http://localhost:8000/url/<%= url.shortID %>')">
+                    <i class="far fa-copy"></i>
+                  </button>
+                  <button class="action-btn edit">
+                    <i class="far fa-edit"></i>
+                  </button>
+                  <button class="action-btn delete">
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
             <% }); %>
           </tbody>
         </table>
       </div>
       <% } %>
     </div>
+
+    <div class="wave-divider">
+      <svg
+        data-name="Layer 1"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1200 120"
+        preserveAspectRatio="none">
+        <path
+          d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+          class="shape-fill"></path>
+      </svg>
+    </div>
+
+    <script>
+      function copyToClipboard(text) {
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {
+            alert("Copied to clipboard: " + text);
+          })
+          .catch((err) => {
+            console.error("Failed to copy: ", err);
+          });
+      }
+    </script>
   </body>
 </html>
