@@ -328,71 +328,36 @@
   <body>
     <div class="container">
       <h1>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="36"
-          height="36"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#4e73df"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round">
-          <path
-            d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-          <path
-            d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#4e73df" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
         </svg>
         URL Shortener
       </h1>
-
+  
       <% if (locals.id) { %>
       <div class="success-message">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#28a745"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
           <polyline points="22 4 12 14.01 9 11.01"></polyline>
         </svg>
         URL Generated:
         <span class="short-url">http://localhost:8000/url/<%= id %></span>
-        <button
-          class="copy-btn"
-          onclick="copyToClipboard('http://localhost:8000/url/<%= id %>')">
+        <button class="copy-btn" onclick="copyToClipboard('http://localhost:8000/url/<%= id %>')">
           <i class="far fa-copy"></i>
         </button>
       </div>
       <% } %>
-
+  
       <form method="post" action="/url">
         <label>
           Enter your original URL:
           <div class="input-group">
             <i class="fas fa-link"></i>
-            <input
-              type="text"
-              placeholder="https://example.com"
-              name="url"
-              required />
+            <input type="text" placeholder="https://example.com" name="url" required />
           </div>
           <button type="submit">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M3 3h7v7H3z"></path>
               <path d="M14 3h7v7h-7z"></path>
               <path d="M14 14h7v7h-7z"></path>
@@ -402,23 +367,13 @@
           </button>
         </label>
       </form>
-
+  
       <% if (locals.urls) { %>
       <div class="urls-container">
         <div class="urls-header">
           <h2>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#2c3e50"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round">
-              <path
-                d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
             </svg>
             Your Short URLs
           </h2>
@@ -436,47 +391,24 @@
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="urlTableBody">
             <% urls.forEach((url, index) => { %>
-            <tr>
-              <td><%= index+1 %></td>
+            <tr data-id="<%= url.shortID %>">
+              <td class="serial-number"><%= index+1 %></td>
               <td class="short-url">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#4e73df"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path
-                    d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                  <path
-                    d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4e73df" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
                 </svg>
                 <%= url.shortID %>
               </td>
               <td>
-                <a
-                  href="<%= url.redirectURL %>"
-                  target="_blank"
-                  class="redirect-url">
+                <a href="<%= url.redirectURL %>" target="_blank" class="redirect-url">
                   <%= url.redirectURL %>
                 </a>
               </td>
               <td class="clicks-count">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#28a745"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                   <circle cx="12" cy="12" r="3"></circle>
                 </svg>
@@ -484,15 +416,13 @@
               </td>
               <td>
                 <div class="action-btns">
-                  <button
-                    class="action-btn copy-btn"
-                    onclick="copyToClipboard('http://localhost:8000/url/<%= url.shortID %>')">
+                  <button class="action-btn copy-btn" onclick="copyToClipboard('http://localhost:8000/url/<%= url.shortID %>')">
                     <i class="far fa-copy"></i>
                   </button>
                   <button class="action-btn edit">
                     <i class="far fa-edit"></i>
                   </button>
-                  <button class="action-btn delete">
+                  <button class="action-btn delete" data-id="<%= url.shortID %>">
                     <i class="far fa-trash-alt"></i>
                   </button>
                 </div>
@@ -504,23 +434,16 @@
       </div>
       <% } %>
     </div>
-
+  
     <div class="wave-divider">
-      <svg
-        data-name="Layer 1"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 1200 120"
-        preserveAspectRatio="none">
-        <path
-          d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
-          class="shape-fill"></path>
+      <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
       </svg>
     </div>
-
+  
     <script>
       function copyToClipboard(text) {
-        navigator.clipboard
-          .writeText(text)
+        navigator.clipboard.writeText(text)
           .then(() => {
             alert("Copied to clipboard: " + text);
           })
@@ -528,6 +451,72 @@
             console.error("Failed to copy: ", err);
           });
       }
+  
+      // delete functionality with automatic serial number updates
+      document.addEventListener('DOMContentLoaded', function() {
+        const tableBody = document.getElementById('urlTableBody');
+        const totalElement = document.querySelector('.total-urls');
+        
+        if (tableBody) {
+          tableBody.addEventListener('click', async function(e) {
+            if (e.target.closest('.action-btn.delete')) {
+              e.preventDefault();
+              const deleteBtn = e.target.closest('.action-btn.delete');
+              const row = deleteBtn.closest('tr');
+              const shortId = deleteBtn.getAttribute('data-id');
+              
+              if (confirm('Are you sure you want to delete this URL?')) {
+                try {
+                  // Show loading state
+                  const trashIcon = deleteBtn.querySelector('i');
+                  const originalIcon = trashIcon.className;
+                  trashIcon.className = 'fas fa-spinner fa-spin';
+                  deleteBtn.disabled = true;
+                  
+                  const response = await fetch(`/url/${shortId}`, {
+                    method: 'DELETE',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                  });
+                  
+                  if (response.ok) {
+                    // Animate row removal
+                    row.style.opacity = '0';
+                    row.style.transition = 'opacity 0.3s ease';
+                    
+                    setTimeout(() => {
+                      row.remove();
+                      
+                      // Update all serial numbers
+                      const rows = tableBody.querySelectorAll('tr');
+                      rows.forEach((row, index) => {
+                        row.querySelector('.serial-number').textContent = index + 1;
+                      });
+                      
+                      // Update total count
+                      if (totalElement) {
+                        totalElement.textContent = `Total: ${rows.length}`;
+                      }
+                    }, 300);
+                  } else {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Failed to delete URL');
+                  }
+                } catch (error) {
+                  console.error('Delete error:', error);
+                  alert(error.message);
+                  // Reset button state
+                  const trashIcon = deleteBtn.querySelector('i');
+                  trashIcon.className = originalIcon;
+                  deleteBtn.disabled = false;
+                }
+              }
+            }
+          });
+        }
+      });
     </script>
   </body>
 </html>
